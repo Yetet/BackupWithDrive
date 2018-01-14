@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using BackupWithDrive;
+using File = TagLib.Tiff.Rw2.File;
 
 /// <summary>
 /// Final project for 2017-2018 | First semester | Programming II class with Mrs. Finoli.
@@ -59,7 +60,7 @@ class Program
                 {
                   Mp3File mp3File = new Mp3File(f.FullName);
                   // Add f to _mp3List.
-                  _mp3List.Add(f.FullName);
+                  _mp3Files.Add(mp3File);
                   Console.WriteLine("\t" + f.FullName + " | " + f.CreationTime);
                 }
               }
@@ -143,15 +144,16 @@ class Program
     return fileNames;
   }
 
-  /*private static void Serialize(List<Mp3File> f)
+  private static void Serialize(List<Mp3File> f)
   {
     XmlSerializer serializer = new XmlSerializer(typeof(List<Mp3File>));
-    using (StringWriter writer = new StringWriter())
-    {
-      serializer.Serialize(writer, f);
-      Console.WriteLine(writer.ToString());
-    }
-  }*/
+    Stream s = System.IO.File.Create("output.xml");
+    serializer.Serialize(s, f);
+    s.Close();
+    string[] lines = System.IO.File.ReadAllLines("output.xml");
+    lines[0] += "<?xml-stylesheet type=\"text / xsl\" href=\"hello.xsl\"?>";
+    // TODO: Write all lines back to xml file.
+  }
 
   public static void Main(String[] args)
   {
@@ -162,7 +164,7 @@ class Program
 
     getFilesRecursive(@"F:\\", DateTime.Now.AddDays(-7));
 
-    // Serialize(_mp3Files);
+    Serialize(_mp3Files);
 
     stopwatch.Stop();
     Console.WriteLine("Process took " + stopwatch.ElapsedMilliseconds.ToString() + " milliseconds");

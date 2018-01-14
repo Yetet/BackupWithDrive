@@ -11,10 +11,10 @@ namespace BackupWithDrive
   [Serializable]
   public class Mp3File
   {
-    public string Path;
-    public string Title;
-    public string Album;
-    public string Artist;
+    public string Path = "";
+    public string Title = "";
+    public string Album = "";
+    public string Artist = "";
 
     public Mp3File()
     {
@@ -24,7 +24,7 @@ namespace BackupWithDrive
     public Mp3File(string path)
     {
       Path = path;
-      parseTag(Path);
+      parseTag(path);
     }
 
     private void parseTag(string path)
@@ -36,9 +36,9 @@ namespace BackupWithDrive
       else
       {
         TagLib.File tagFile = TagLib.File.Create(path);
-        Title = tagFile.Tag.Title;
-        Album = tagFile.Tag.Album;
-        Artist = tagFile.Tag.FirstAlbumArtist;
+        Title += tagFile.Tag.Title;
+        Album += tagFile.Tag.Album;
+        Artist += tagFile.Tag.FirstAlbumArtist;
       }
     }
   }

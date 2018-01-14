@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<ArrayOfMp3File xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Mp3File>
+    <Path>F:\Demonic Prophecy\Demonic Prophecy\Demonic Prophecy - Black Winds Of The Apocalypse.mp3</Path>
+    <Title>Black Winds Of The Apocalypse</Title>
+    <Album>Demonic Prophecy</Album>
+    <Artist />
+  </Mp3File>
+  <Mp3File>
+    <Path>F:\Demonic Prophecy\Demonic Prophecy\Demonic Prophecy - Demons Unleashed.mp3</Path>
+    <Title>Demons Unleashed</Title>
+    <Album>Demonic Prophecy</Album>
+    <Artist />
+  </Mp3File>
+  <Mp3File>
+    <Path>F:\Demonic Prophecy\Demonic Prophecy\Demonic Prophecy - Wrath Of The Necrogoat.mp3</Path>
+    <Title>Wrath Of The Necrogoat</Title>
+    <Album>Demonic Prophecy</Album>
+    <Artist />
+  </Mp3File>
+  <Mp3File>
+    <Path>F:\misc\bored_to_a_painful_death.mp3</Path>
+    <Title />
+    <Album />
+    <Artist />
+  </Mp3File>
+  <Mp3File>
+    <Path>F:\misc\Graveyard Project\rendered\20140224_Graveyard.mp3</Path>
+    <Title />
+    <Album />
+    <Artist />
+  </Mp3File>
+  <Mp3File>
+    <Path>F:\misc\Graveyard Project\rendered\20150305_Graveyard.mp3</Path>
+    <Title />
+    <Album />
+    <Artist />
+  </Mp3File>
+  <Mp3File>
+    <Path>F:\misc\Graveyard Project\rendered\20150322-a_Graveyard_puny_shabby_planet.mp3</Path>
+    <Title />
+    <Album />
+    <Artist />
+  </Mp3File>
+  <Mp3File>
+    <Path>F:\misc\Graveyard Project\rendered\20150322b_Graveyard_puny_shabby_planet.mp3</Path>
+    <Title />
+    <Album />
+    <Artist />
+  </Mp3File>
+  <Mp3File>
+    <Path>F:\misc\Graveyard Project\rendered\20150322_Graveyard_puny_shabby_planet.mp3</Path>
+    <Title />
+    <Album />
+    <Artist />
+  </Mp3File>
+</ArrayOfMp3File>
