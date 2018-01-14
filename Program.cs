@@ -23,7 +23,8 @@ using System.Threading.Tasks;
 class Program
 {
   // List of files in the directory.
-  private static List<string> _dirList = new List<string>();
+  private static List<string> _mp3List = new List<string>();
+  private static List<string> _driveFileNames;
 
   /// <summary>
   /// Get all files last modified before a certain date in a directory recursively.
@@ -32,42 +33,39 @@ class Program
   /// <param name="date">The date of which to add files from before.</param>
   private static void GetFilesRecursive(string dir, DateTime date)
   {
+    DirectoryInfo di = new DirectoryInfo(dir);
     // Try to search through each directory within dir.
     try
     {
       // Foreach directory in dir.
-      foreach (string d in Directory.GetDirectories(dir))
+      foreach (DirectoryInfo d in di.GetDirectories())
       {
         // Filter out not needed files.
-        if (!d.Contains("$"))
+        if (!di.FullName.Contains("$"))
         {
-          // If directory LastWriteTime was before date, then...
-          if (DateTime.Compare(Directory.GetLastWriteTime(d), date) < 0)
+          Console.WriteLine(d.FullName + " | " + di.CreationTime);
+          // Foreach file in each directory within dir.
+          try
           {
-            Console.WriteLine(d);
-            // Foreach file in each directory within dir.
-            try
+            foreach (FileInfo f in d.GetFiles())
             {
-              foreach (string f in Directory.GetFiles(d))
+              // If file LastWriteTime was before date, then...
+              if (DateTime.Compare(f.CreationTime.Date, date) > 0 && f.Extension == ".mp3")
               {
-                // If file LastWriteTime was before date, then...
-                if (DateTime.Compare(Directory.GetLastWriteTime(f), date) < 0)
-                {
-                  // Add f to _dirList.
-                  _dirList.Add(f);
-                  Console.WriteLine("    >" + f);
-                }
+                if (!_driveFileNames.Contains(f.Name))
+                // Add f to _mp3List.
+                _mp3List.Add(f.FullName);
+                Console.WriteLine("\t" + f.FullName + " | " + f.CreationTime);
               }
             }
-            // Catch any exception.
-            catch (Exception ex)
-            {
-              Console.WriteLine(ex.Message);
-            }
-            // Recursion.
-            GetFilesRecursive(d, date);
+          }
+          catch (Exception ex)
+          {
+            Console.WriteLine(ex.Message);
           }
         }
+        // Recursion.
+        GetFilesRecursive(d.FullName, date);
       }
     }
     catch (Exception e)
@@ -82,7 +80,10 @@ class Program
 
   private static List<string> _driveFiles = new List<string>();
 
-  private static void GetDriveFiles()
+  /// <summary>
+  /// Requests user to log in to their Google Account and creates a list of files that are in the Drive.
+  /// </summary>
+  private static List<string> GetDriveFiles()
   {
     // If modifying these scopes, delete your previously saved credentials
     // at ~/.credentials/drive-dotnet-quickstart.json
@@ -118,37 +119,32 @@ class Program
     listRequest.Fields = "nextPageToken, files(id, name)";
 
     // List files.
+    List<string> fileNames = new List<string>();
     IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute().Files;
     Console.WriteLine("Files:");
     if (files != null && files.Count > 0)
     {
       foreach (var file in files)
       {
+        fileNames.Add(file.Name);
         Console.WriteLine("{0} ({1})", file.Name, file.Id);
-        _driveFiles.Add(file.Name);
       }
     }
     else
     {
       Console.WriteLine("No files found.");
     }
-    Console.Read();
-  }
-
-  private static bool DoesFileExist(Google.Apis.Drive.v3.Data.File file)
-  {
-
-    return false;
+    return fileNames;
   }
 
   public static void Main(String[] args)
   {
-    GetDriveFiles();
+    _driveFileNames = GetDriveFiles();
 
     Stopwatch stopwatch = new Stopwatch();
     stopwatch.Start();
 
-    GetFilesRecursive(@"C:\\", DateTime.Now);
+    GetFilesRecursive(@"F:\\", DateTime.Now.AddDays(-7));
 
     stopwatch.Stop();
     Console.WriteLine("Process took " + stopwatch.ElapsedMilliseconds.ToString() + " milliseconds");
