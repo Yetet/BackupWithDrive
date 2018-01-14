@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using BackupWithDrive;
 
 /// <summary>
 /// Final project for 2017-2018 | First semester | Programming II class with Mrs. Finoli.
@@ -25,13 +27,14 @@ class Program
   // List of files in the directory.
   private static List<string> _mp3List = new List<string>();
   private static List<string> _driveFileNames;
+  private static List<Mp3File> _mp3Files = new List<Mp3File>();
 
   /// <summary>
   /// Get all files last modified before a certain date in a directory recursively.
   /// </summary>
   /// <param name="dir">Directory to walk through.</param>
   /// <param name="date">The date of which to add files from before.</param>
-  private static void GetFilesRecursive(string dir, DateTime date)
+  private static void getFilesRecursive(string dir, DateTime date)
   {
     DirectoryInfo di = new DirectoryInfo(dir);
     // Try to search through each directory within dir.
@@ -53,9 +56,12 @@ class Program
               if (DateTime.Compare(f.CreationTime.Date, date) > 0 && f.Extension == ".mp3")
               {
                 if (!_driveFileNames.Contains(f.Name))
-                // Add f to _mp3List.
-                _mp3List.Add(f.FullName);
-                Console.WriteLine("\t" + f.FullName + " | " + f.CreationTime);
+                {
+                  Mp3File mp3File = new Mp3File(f.FullName);
+                  // Add f to _mp3List.
+                  _mp3List.Add(f.FullName);
+                  Console.WriteLine("\t" + f.FullName + " | " + f.CreationTime);
+                }
               }
             }
           }
@@ -65,7 +71,7 @@ class Program
           }
         }
         // Recursion.
-        GetFilesRecursive(d.FullName, date);
+        getFilesRecursive(d.FullName, date);
       }
     }
     catch (Exception e)
@@ -83,7 +89,7 @@ class Program
   /// <summary>
   /// Requests user to log in to their Google Account and creates a list of files that are in the Drive.
   /// </summary>
-  private static List<string> GetDriveFiles()
+  private static List<string> getDriveFiles()
   {
     // If modifying these scopes, delete your previously saved credentials
     // at ~/.credentials/drive-dotnet-quickstart.json
@@ -137,14 +143,26 @@ class Program
     return fileNames;
   }
 
+  /*private static void Serialize(List<Mp3File> f)
+  {
+    XmlSerializer serializer = new XmlSerializer(typeof(List<Mp3File>));
+    using (StringWriter writer = new StringWriter())
+    {
+      serializer.Serialize(writer, f);
+      Console.WriteLine(writer.ToString());
+    }
+  }*/
+
   public static void Main(String[] args)
   {
-    _driveFileNames = GetDriveFiles();
+    _driveFileNames = getDriveFiles();
 
     Stopwatch stopwatch = new Stopwatch();
     stopwatch.Start();
 
-    GetFilesRecursive(@"F:\\", DateTime.Now.AddDays(-7));
+    getFilesRecursive(@"F:\\", DateTime.Now.AddDays(-7));
+
+    // Serialize(_mp3Files);
 
     stopwatch.Stop();
     Console.WriteLine("Process took " + stopwatch.ElapsedMilliseconds.ToString() + " milliseconds");

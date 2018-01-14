@@ -19,3 +19,6 @@ c:\users\ghook\documents\visual studio 2015\Projects\BackupWithDrive\BackupWithD
 c:\Users\ghook\Documents\Visual Studio 2015\Projects\BackupWithDrive\BackupWithDrive\bin\Debug\nunit.framework.dll
 c:\Users\ghook\Documents\Visual Studio 2015\Projects\BackupWithDrive\BackupWithDrive\bin\Debug\nunit.framework.xml
 c:\users\ghook\documents\visual studio 2015\Projects\BackupWithDrive\BackupWithDrive\obj\Debug\BackupWithDrive.csprojResolveAssemblyReference.cache
+c:\users\ghook\documents\visual studio 2015\Projects\BackupWithDrive\BackupWithDrive\bin\Debug\policy.2.0.taglib-sharp.dll
+c:\users\ghook\documents\visual studio 2015\Projects\BackupWithDrive\BackupWithDrive\bin\Debug\taglib-sharp.dll
+c:\users\ghook\documents\visual studio 2015\Projects\BackupWithDrive\BackupWithDrive\bin\Debug\policy.2.0.taglib-sharp.config
